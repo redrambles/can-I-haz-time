@@ -1,5 +1,6 @@
 var time = new Date().getHours();
 var messageText;
+var clock = document.getElementById('clock');    
 var noon = 12;
 var evening = 18; // 6PM
 var wakeupTime = 9; // 9AM
@@ -14,8 +15,10 @@ var isPartyTime = false;
 var timeEvent = document.getElementById("timeEvent");
 var image = "https://s3.amazonaws.com/media.skillcrush.com/skillcrush/wp-content/uploads/2016/09/cat5.jpg";
 var lolcat = document.getElementById("lolcat");
+var year = new Date().getFullYear();
+var copyright = document.getElementById("copyright");
 
-var updateClock = function() {
+var updateClock = function(){
 
     if (time == partyTime){
         messageText = "IZ PARTEE TIME!!";
@@ -45,49 +48,42 @@ var updateClock = function() {
 };
     // Clock
 
-    var showCurrentTime = function()
-    {
-        // display the string on the webpage
-        var clock = document.getElementById('clock');
-    
-        var currentTime = new Date();
-    
-        var hours = currentTime.getHours();
-        var minutes = currentTime.getMinutes();
-        var seconds = currentTime.getSeconds();
-        var meridian = "AM";
-    
-        // Set hours 
-        if (hours >= noon) 
-        { 
-            meridian = "PM"; 
-        }  
-        if (hours > noon) 
-        { 
-            hours = hours - 12; 
-        }
-        // Set Minutes
-        if (minutes < 10)
-        {
-            minutes = "0" + minutes;
-        }
-        // Set Seconds
-        if (seconds < 10)
-        {
-            seconds = "0" + seconds;
-        }
-        // put together the string that displays the time
-        var clockTime = hours + ':' + minutes + ':' + seconds + " " + meridian + "!";
-    
-        clock.innerText = clockTime;
-    };
+var showCurrentTime = function(){
 
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    var meridian = "AM";
+
+    // Set hours 
+    if (hours >= noon) { 
+        meridian = "PM"; 
+    }  
+    if (hours > noon) { 
+        hours = hours - 12; 
+    }
+    // Set Minutes
+    if (minutes < 10){
+        minutes = "0" + minutes;
+    }
+    // Set Seconds
+    if (seconds < 10){
+        seconds = "0" + seconds;
+    }
+    // put together the string that represents the time
+    var clockTime = hours + ':' + minutes + ':' + seconds + " " + meridian + "!";
+    // display time in clock
+    clock.innerText = clockTime;
+};
 updateClock();
+
 // one second
 var oneSecond = 1000;
 // Get the updateClock function to behave like a clock, by updating it every second
 setInterval(updateClock, oneSecond);
 
+// Party Button 
 var partyEvent = function() {
    if (isPartyTime === false) {
       isPartyTime = true;
@@ -119,3 +115,6 @@ var napEvent = function(){
 napTimeSelector.addEventListener('change', napEvent);
 lunchTimeSelector.addEventListener('change', lunchEvent);
 wakeUpTimeSelector.addEventListener('change', wakeUpEvent);
+
+// Dynamic Copyright Year
+copyright.innerText = year;
